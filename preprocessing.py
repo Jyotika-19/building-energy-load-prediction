@@ -47,7 +47,7 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_val_scaled   = scaler.transform(X_val)
 X_test_scaled  = scaler.transform(X_test)
 
-print("\n=== Feature means after normalization (train should be ~0) ===")
+print("\nFeature means after normalization (train should be 0)")
 print(f"Train mean: {X_train_scaled.mean(axis=0).round(4)}")
 print(f"Val mean:   {X_val_scaled.mean(axis=0).round(4)}")
 print(f"Test mean:  {X_test_scaled.mean(axis=0).round(4)}")

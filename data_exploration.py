@@ -6,22 +6,24 @@ from ucimlrepo import fetch_ucirepo
 energy_efficiency = fetch_ucirepo(id=242)
 X = energy_efficiency.data.features
 y = energy_efficiency.data.targets
-
 df = pd.concat([X, y], axis=1)
-print(df.head())
-print(df.shape)
-print(df.dtypes)
-print(df.describe())
-print(df.duplicated().sum())
+
+print(df.head()) # 1st 5 rows of the dataset
+print(df.shape)  # (768, 10) — rows x columns
+print(df.dtypes) # data type of each column 
+print(df.describe()) # summary statistics of each column
+print(df.duplicated().sum()) # number of duplicate rows
 
 print(df.corr())            # corr() returns values between -1 and 1
 # 1 = perfect positive correlation, -1 = perfect negative, 0 = no correlation
 
-sns.heatmap(df.corr(),
+sns.heatmap(df.corr().abs(),
             cmap='Blues',        # single colour, darker = stronger correlation
             annot=True,
             fmt=".2f",
             annot_kws={"size": 7})
+
+plt.savefig("charts/correlation_heatmap.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 plt.figure(figsize=(10, 4))
@@ -34,7 +36,9 @@ plt.subplot(1, 2, 2)
 sns.histplot(data=df['Y2'])
 plt.xlabel('Cooling Load')
 plt.title('Distribution of Cooling Load (Y2)', fontsize=9)
+
 plt.tight_layout()
+plt.savefig("charts/heating_cooling_distributions.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 print(df['X5'].unique())
@@ -61,25 +65,33 @@ feature_names = {
 # Scatter plots: all features vs Y1 (Heating Load)
 fig, axes = plt.subplots(2, 4, figsize=(16, 8))
 axes = axes.flatten()
+
 for i, col in enumerate(feature_cols):
     axes[i].scatter(df[col], df['Y1'], alpha=0.3, color='steelblue', s=10)
     axes[i].set_xlabel(feature_names[col])
     axes[i].set_ylabel('Heating Load (Y1)')
     axes[i].set_title(f'{col} vs Y1')
+
 fig.suptitle('Features vs Heating Load (Y1)', fontsize=13)
+
 plt.tight_layout()
+plt.savefig("charts/features_vs_heating_load.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 # Scatter plots: all features vs Y2 (Cooling Load)
 fig, axes = plt.subplots(2, 4, figsize=(16, 8))
 axes = axes.flatten()
+
 for i, col in enumerate(feature_cols):
     axes[i].scatter(df[col], df['Y2'], alpha=0.3, color='coral', s=10)
     axes[i].set_xlabel(feature_names[col])
     axes[i].set_ylabel('Cooling Load (Y2)')
     axes[i].set_title(f'{col} vs Y2')
+
 fig.suptitle('Features vs Cooling Load (Y2)', fontsize=13)
+
 plt.tight_layout()
+plt.savefig("charts/features_vs_cooling_load.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 # Y1 vs Y2 scatter — justifies predicting them as two separate regression problems
@@ -88,5 +100,7 @@ plt.scatter(df['Y1'], df['Y2'], alpha=0.3, color='purple', s=10)
 plt.xlabel('Heating Load (Y1)')
 plt.ylabel('Cooling Load (Y2)')
 plt.title(f'Y1 vs Y2 (corr = {df["Y1"].corr(df["Y2"]):.2f})')
+
 plt.tight_layout()
+plt.savefig("charts/y1_vs_y2_scatter.png", dpi=300, bbox_inches="tight")
 plt.show()

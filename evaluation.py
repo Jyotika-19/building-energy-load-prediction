@@ -64,6 +64,7 @@ residual_plot(axes[2], y_test_Y1, dt_Y1.predict(X_test),
               'seagreen')
 
 plt.tight_layout()
+plt.savefig('charts/residual_plots_Y1.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 # Y2 — Cooling Load: Residual plots
@@ -83,6 +84,7 @@ residual_plot(axes[2], y_test_Y2, dt_Y2.predict(X_test),
               'seagreen')
 
 plt.tight_layout()
+plt.savefig('charts/residual_plots_Y2.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 # Summary table
