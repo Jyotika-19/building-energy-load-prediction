@@ -9,6 +9,16 @@ energy_efficiency = fetch_ucirepo(id=242)
 X = energy_efficiency.data.features
 y = energy_efficiency.data.targets
 
+# Feature Space Lifting
+X = X.copy()
+X['X1_sq'] = X['X1'] ** 2
+X['X7_sq'] = X['X7'] ** 2
+X['X1_X5'] = X['X1'] * X['X5']
+
+print("Feature space lifting complete.")
+print(f"Original features: 8 → After lifting: {X.shape[1]} features")
+print(f"Added features: X1², X7², X1×X5")
+
 # Split: 60% train, 20% val, 20% test
 # First split off 20% test
 X_train_val, X_test, y_train_val, y_test = train_test_split(
